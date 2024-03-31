@@ -31,7 +31,7 @@ void menu()
 {
 	int op = 0;
 	while (op != 7) {
-		system("cls"); // somente no windows
+		//system("cls"); // somente no windows
 		cout << "Menu Lista Ligada";
 		cout << endl << endl;
 		cout << "1 - Inicializar Lista \n";
@@ -66,14 +66,14 @@ void menu()
 			break;
 		}
 
-		system("pause"); // somente no windows
+		//system("pause"); // somente no windows
 	}
 }
 
 void inicializar()
 {
 
-	// se a lista j� possuir elementos
+	// se a lista ja possuir elementos
 	// libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
@@ -145,18 +145,81 @@ void inserirElemento()
 
 void excluirElemento()
 {
+	int delNum;
+	bool zero = true;
+	bool del = false;
 	
+	cout << "Digite o elemento a ser excluído: ";
+	cin >> delNum;
+	
+	NO* indice = primeiro;
+	NO* anterior;
+	
+	if (posicaoElemento(delNum) == NULL){
+	    cout << "Elemento não encontrado.\n";
+	    cout << endl;
+	}
+	    
+	while (indice != NULL && posicaoElemento(delNum) != NULL){
+	   
+	    if (zero == true){
+	        if (indice->valor == delNum){
+	            primeiro = indice->prox;
+	            free (indice);
+	            cout << "Elemento excluído com sucesso. \n";
+	            cout << endl;
+	            del = true;
+	        }
+	        else{
+	            anterior = indice;
+	        }
+	        zero = false;
+	    }
+	    else{
+	        if (indice->valor == delNum){
+	            anterior->prox = indice->prox;
+	            free (indice);
+	            del = true;
+	        }
+	        else
+	        {
+	            anterior=indice;
+	        }
+	    }
+	    if (del){
+	        del = false;
+	        break;
+	    }
+	    indice = indice->prox;
+	}
+
 }
 
 void buscarElemento()
 {
+	int buscarNum;
+	if (primeiro != NULL){
+	    cout << "Digite o elemento que está procurando: ";
+	    cin >> buscarNum;
+	    
+	    if (posicaoElemento(buscarNum) != NULL){
+	        cout << "Elemento Encontrado\n";
+	        cout << "A posição que ele se encontra atualmente é:";
+	        cout << posicaoElemento;
+	        cout << endl;
+	    }
+	    else{
+	        cout << "Elemento não encontrado. \n";
+	        cout << endl;
+	    }
+	}
+	else{
+	    cout << "A lista está vazia. \n";
+	    cout << endl;
+	}
 	
 }
 
-
-
-// retorna um ponteiro para o elemento buscado
-// ou NULL se o elemento n�o estiver na lista
 NO* posicaoElemento(int numero)
 {
 	NO* aux = primeiro;
